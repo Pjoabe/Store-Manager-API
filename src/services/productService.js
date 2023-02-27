@@ -14,7 +14,17 @@ const productById = async (id) => {
   return productsId;
 };
 
+const newInsertion = async (name) => {
+  const insert = await productModel.insertSQL(name);
+  const newProduct = await productModel.getById(insert);
+  if (newProduct.length === 0) {
+    return { message: 'Product not insert' };
+  }
+  return newProduct;
+};
+
 module.exports = {
   allProducts,
   productById,
+  newInsertion,
 };
