@@ -1,11 +1,11 @@
-const { getById } = require('../models/productModel');
-const { insertNewSaleProduct } = require('../models/saleModel');
+const { insertNewSaleProduct,
+  getAllSaleDetails, getSaleDetailsById } = require('../models/saleModel');
 const { insertSQLSale } = require('../models/saleModel');
 const { validateSales } = require('../middlewares/validateSales');
 
 const verifyLength = async (sales) => {
   const saleProduct = await Promise.all(
-    sales.map(({ productId }) => getById(productId)),
+    sales.map(({ productId }) => getSaleDetailsById(productId)),
   );
   return saleProduct.some((size) => !size.length);
 };
@@ -31,6 +31,21 @@ const insertNewSale = async (sales) => {
   return { type: undefined, message: product };
 };
 
+const searchAllSales = async () => {
+  const result = await getAllSaleDetails();
+  return { type: 200, message: result };
+};
+
+const searchById = async (id) => {
+  const result = await getSaleDetailsById(id);
+  if (!result.length) {
+    return { type: 404, message: { message: 'Sale not found' } };
+  }
+  return { type: 200, message: result };
+};
+
 module.exports = {
   insertNewSale,
+  searchById,
+  searchAllSales,
 };
