@@ -33,9 +33,19 @@ const updateProductNameById = async (id, name) => {
   await productModel.updateSQL(id, name);
 };
 
+const deleteProductFromDBById = async (id) => {
+  const productsId = await productModel.getById(id);
+  if (!productsId.length) {
+    return { message: 'Product not found' };
+  }
+  await productModel.removeSQL(id);
+  return productsId;
+};
+
 module.exports = {
   allProducts,
   productById,
   newInsertion,
   updateProductNameById,
+  deleteProductFromDBById,
 };
