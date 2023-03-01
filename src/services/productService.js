@@ -23,8 +23,19 @@ const newInsertion = async (name) => {
   return newProduct;
 };
 
+const updateProductNameById = async (id, name) => {
+  const productsId = await productModel.getById(id);
+
+  if (!productsId.length) {
+    return { message: 'Product not found' };
+  }
+
+  await productModel.updateSQL(id, name);
+};
+
 module.exports = {
   allProducts,
   productById,
   newInsertion,
+  updateProductNameById,
 };
