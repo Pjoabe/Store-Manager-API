@@ -28,6 +28,9 @@ describe("test the controller layer", function () {
     expect(res.json).to.have.been.calledWith(productSearchNameResponse[0]);
   });
 
+  it('testando, apenas', async function () {
+
+  });
   afterEach(function () {
     sinon.restore();
   });
