@@ -7,7 +7,7 @@ const { allProductsResponse,error404 } = require('../../../__tests__/_dataMock')
 
 describe("test the service layer", function () {
   it("Should return an error when searching for a product by its id", async function () {
-    sinon.stub(productModel, "getById").resolves(4);
+    sinon.stub(productModel, "getById").resolves(5);
     const result = await productService.productById(500);
 
     expect(result).to.be.deep.equal(error404);
