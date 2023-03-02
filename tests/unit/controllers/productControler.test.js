@@ -54,7 +54,11 @@ it("should throw 404 error", async function () {
 
    expect(res.json).to.have.been.calledWith(allProductsResponse);
  });
+  
+ it("", function () {
 
+ }); 
+  
   afterEach(function () {
     sinon.restore();
   });
