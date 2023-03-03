@@ -11,7 +11,10 @@ const {
   allProductsResponse,
   productSearchNameResponse,
   error404,
-} = require('../../../__tests__/_dataMock');
+  rightProductBody,
+  notInsert,
+} = require("../../../__tests__/_dataMock");
+
 
 describe("test the controller layer", function () {
   it("should search a product by its id", async function () {
@@ -55,10 +58,32 @@ it("should throw 404 error", async function () {
    expect(res.json).to.have.been.calledWith(allProductsResponse);
  });
   
- it("", function () {
+  it("should register a new product", async function () {
+    const res = {};
+    const req = { body: { name: "ProdutoN" } };
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productService, "newInsertion").resolves([rightProductBody]);
+    await productController.newProduct(req, res);
 
- }); 
-  
+    expect(res.status).to.have.been.calledWith(201);
+
+    expect(res.json).to.have.been.calledWith(rightProductBody);
+  });
+
+ it("should throw 404 error about wrong product insertion", async function () {
+   const res = {};
+   const req = { body: { name: "EUAE" } };
+   res.status = sinon.stub().returns(res);
+   res.json = sinon.stub().returns();
+   sinon.stub(productService, "newInsertion").resolves(notInsert);
+   await productController.newProduct(req, res);
+
+   expect(res.status).to.have.been.calledWith(404);
+
+   expect(res.json).to.have.been.calledWith(notInsert);
+ });
+
   afterEach(function () {
     sinon.restore();
   });
