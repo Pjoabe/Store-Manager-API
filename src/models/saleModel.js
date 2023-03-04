@@ -47,10 +47,18 @@ const deleteFromDBById = async (id) => {
   await connection.execute('DELETE FROM StoreManager.sales WHERE id = ?', [id]);
 };
 
+const updateDBById = async (id) => {
+  await connection.execute(
+    'DELETE FROM StoreManager.sales_products WHERE sale_id = ?',
+    [id],
+  );
+};
+
 module.exports = {
   insertSQLSale,
   insertNewSaleProduct,
   getAllSaleDetails,
   getSaleDetailsById,
   deleteFromDBById,
+  updateDBById,
 };

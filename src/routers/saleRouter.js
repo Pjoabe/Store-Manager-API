@@ -4,6 +4,7 @@ const {
   getAllSales,
   getSaleById,
   removeById,
+  updateById,
 } = require('../controllers/saleController');
 
 const saleRouter = express.Router();
@@ -15,5 +16,7 @@ saleRouter.get('/', getAllSales);
 saleRouter.get('/:id', getSaleById);
 
 saleRouter.delete('/:id', removeById);
+
+saleRouter.put('/:id', updateById);
 
 module.exports = saleRouter;

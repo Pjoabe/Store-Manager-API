@@ -1,5 +1,10 @@
-const { insertNewSale, searchAllSales,
-  searchById, removeFromDB } = require('../services/saleService');
+const {
+  insertNewSale,
+  searchAllSales,
+  searchById,
+  removeFromDB,
+  updateSaleService,
+} = require('../services/saleService');
 
 const newSale = async (req, res) => {
   const sale = req.body;
@@ -30,9 +35,20 @@ const removeById = async (req, res) => {
   return res.status(204).json(message);
 };
 
+const updateById = async (req, res) => {
+  const sales = req.body;
+  const { id } = req.params;
+  const response = await updateSaleService(id, sales);
+  if (response.type) {
+    return res.status(response.type).json({ message: response.message });
+  }
+  return res.status(200).json(response.message);
+};
+
 module.exports = {
   newSale,
   getAllSales,
   getSaleById,
   removeById,
+  updateById,
 };
