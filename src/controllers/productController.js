@@ -46,10 +46,20 @@ const deleteProductById = async (req, res) => {
   return res.status(204).end();
 };
 
+const searchProductByName = async (req, res) => {
+  const { q } = req.query;
+  const name = await productService.searchProductOnDBByName(q);
+  if (name.length > 0) {
+    return res.status(200).json(name);
+  }
+  return res.status(404).json({ error: 'Nenhum produto encontrado' });
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   newProduct,
   updateProductByName,
   deleteProductById,
+  searchProductByName,
 };

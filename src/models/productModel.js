@@ -42,10 +42,19 @@ const removeSQL = async (id) => {
   return result;
 };
 
+const searchOnSqlByName = async (name) => {
+  const [result] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE name LIKE  "%ma%"',
+    [name],
+  );
+  return result;
+};
+
 module.exports = {
    getAll,
    getById,
   insertSQL,
   updateSQL,
-   removeSQL,
+  removeSQL,
+   searchOnSqlByName,
 };

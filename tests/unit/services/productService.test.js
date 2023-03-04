@@ -51,4 +51,12 @@ describe("test the service layer", function () {
     sinon.restore();
   });
 
+ it("should delete a product from DB by its id", async function () {
+   sinon.stub(productModel, "getById").resolves([allProductsResponse1[0]]);
+   sinon.stub(productModel, "removeSQL").resolves(1);
+   const result = await productService.deleteProductFromDBById(1);
+
+   expect(result).to.be.deep.equal([allProductsResponse1[0]]);
+ });
+
 });

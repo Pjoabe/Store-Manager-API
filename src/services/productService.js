@@ -46,10 +46,19 @@ const deleteProductFromDBById = async (id) => {
   return productsId;
 };
 
+const searchProductOnDBByName = async (name) => {
+  const products = await productModel.searchOnSqlByName(name);
+  if (!name) {
+    return productModel.getAll();
+  }
+  return products;
+};
+
 module.exports = {
   allProducts,
   productById,
   newInsertion,
   updateProductNameById,
   deleteProductFromDBById,
+  searchProductOnDBByName,
 };

@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', productController.getAllProducts);
 
+router.get('/search', productController.searchProductByName);
+
 router.get('/:id', productController.getProductById);
 
 router.post('/', nameValidation, productController.newProduct);
