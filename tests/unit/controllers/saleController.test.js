@@ -3,7 +3,6 @@ const sinon = require("sinon");
 const sinonChai = require("sinon-chai");
 const { expect } = chai;
 chai.use(sinonChai);
-
 const saleService = require("../../../src/services/saleService");
 const saleController = require("../../../src/controllers/saleController");
 const { rightSaleBody } = require("../mocks/sales.mock");
@@ -54,7 +53,7 @@ describe("test the sales on controller layer", function () {
     await saleController.getSaleById(req, res);
 
     expect(res.status).to.have.been.calledWith(404);
-    
+
     expect(res.json).to.have.been.calledWith({ message: "Sale not found" });
   });
 });

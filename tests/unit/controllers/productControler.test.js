@@ -13,6 +13,7 @@ const {
   error4041,
   rightProductBody1,
   notInsert1,
+  newName
 } = require('./productController.mock');
 
 
@@ -84,6 +85,46 @@ it("should throw 404 error", async function () {
    expect(res.json).to.have.been.calledWith(notInsert1);
  });
 
+   it("should fail at trying update a product by using a invalid id", async function () {
+     const res = {};
+     const req = { params: { id: 45 }, body: rightProductBody1 };
+     res.status = sinon.stub().returns(res);
+     res.json = sinon.stub().returns();
+     sinon.stub(productService, "updateProductNameById").resolves({ id: 2, name: "Traje de encolhimento" });
+     sinon.stub(productService, "productById").resolves(error4041);
+     await productController.updateProductByName(req, res);
+
+     expect(res.status).to.have.been.calledWith(404);
+
+     expect(res.json).to.have.been.calledWith(error4041);
+   });
+  
+   it("should delete a product", async function () {
+     const res = {};
+     const req = { params: { id: 3 } };
+     res.status = sinon.stub().returns(res);
+     res.end = sinon.stub().returns();
+     sinon.stub(productService, "deleteProductFromDBById").resolves(1);
+     await productController.deleteProductById(req, res);
+
+     expect(res.status).to.have.been.calledWith(204);
+
+     expect(res.end).to.have.been.calledWith();
+   });
+
+   it("should fail when attempting to delete an invalid id", async function () {
+     const res = {};
+     const req = { params: { id: 666 } };
+     res.status = sinon.stub().returns(res);
+     res.json = sinon.stub().returns();
+     sinon.stub(productService, "deleteProductFromDBById").resolves(error4041);
+     await productController.deleteProductById(req, res);
+
+     expect(res.status).to.have.been.calledWith(404);
+
+     expect(res.json).to.have.been.calledWith(error4041);
+   });
+  
   afterEach(function () {
     sinon.restore();
   });

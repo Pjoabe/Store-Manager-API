@@ -31,6 +31,10 @@ const updateProductNameById = async (id, name) => {
   }
 
   await productModel.updateSQL(id, name);
+
+  const updatedProduct = await productModel.getById(id);
+
+  return updatedProduct;
 };
 
 const deleteProductFromDBById = async (id) => {

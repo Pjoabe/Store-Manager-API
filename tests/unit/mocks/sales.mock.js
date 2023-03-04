@@ -3,4 +3,9 @@ const rightSaleBody = [
   { productId: 2, quantity: 5 },
 ];
 
-module.exports = { rightSaleBody,};
+const error4041 = { message: "Product not found" };
+
+module.exports = {
+  rightSaleBody,
+  error4041,
+};

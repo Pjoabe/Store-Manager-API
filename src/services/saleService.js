@@ -1,6 +1,6 @@
 const { insertNewSaleProduct,
   getAllSaleDetails, getSaleDetailsById } = require('../models/saleModel');
-const { insertSQLSale } = require('../models/saleModel');
+const { insertSQLSale, deleteFromDBById } = require('../models/saleModel');
 const { validateSales } = require('../middlewares/validateSales');
 
 const verifyLength = async (sales) => {
@@ -44,8 +44,18 @@ const searchById = async (id) => {
   return { type: 200, message: result };
 };
 
+const removeFromDB = async (id) => {
+  const result = await getSaleDetailsById(id);
+  if (!result.length) {
+    return { type: 404, message: 'Sale not found' };
+  }
+  await deleteFromDBById(id);
+  return true;
+};
+
 module.exports = {
   insertNewSale,
   searchById,
   searchAllSales,
+  removeFromDB,
 };

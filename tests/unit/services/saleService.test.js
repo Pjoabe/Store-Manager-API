@@ -4,6 +4,7 @@ const salesServices = require("../../../src/services/saleService");
 const saleModel = require("../../../src/models/saleModel");
 const { rightSaleBody } = require("../mocks/sales.mock");
 const connection = require("../../../src/models/conection");
+const productModel = require('../../../src/models/productModel')
 
 describe("test the sales on the service layer", function () {
   afterEach(function () {
@@ -39,4 +40,17 @@ describe("test the sales on the service layer", function () {
 
     expect(result.message).to.deep.equal([rightSaleBody[1]]);
   });
+
+    it("should return an error about the quantity", async function () {
+      sinon.stub(productModel, "getById").resolves([rightSaleBody[1]]);
+      sinon.stub(connection, "execute").resolves([[rightSaleBody[1]]]);
+      const result = await salesServices.insertNewSale([
+        {
+          productId: 2,
+        },
+      ]);
+      expect(result.type).to.equal(400);
+      expect(result.message).to.equal('"quantity" is required');
+    });
+
 });
